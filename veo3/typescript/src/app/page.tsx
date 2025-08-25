@@ -34,6 +34,20 @@ export default function Home() {
     }
   };
 
+    // Keyboard shortcuts: Cmd+Enter to generate, Cmd+K to toggle sidebar, Cmd+E to enhance
+    useEffect(() => {
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (e.metaKey && e.key === "Enter") {
+          e.preventDefault();
+          if (!isGenerating) {
+            void handleGenerate();
+          }
+        }
+      };
+      window.addEventListener("keydown", onKeyDown);
+      return () => window.removeEventListener("keydown", onKeyDown);
+    }, [isGenerating, rawPrompt, handleGenerate]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
       <div className="max-w-6xl mx-auto relative">
@@ -69,27 +83,13 @@ export default function Home() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">Preview</h2>
             {videoUrl ? (
               // TODO: remove YouTube player when veo3 is implemented
-              isYouTubeUrl(videoUrl) ? (
-                <div className="w-full rounded-lg border border-gray-200 overflow-hidden">
-                  <div style={{ aspectRatio: "16 / 9" }}>
-                    <iframe
-                      className="w-full h-full"
-                      src={toYouTubeEmbed(videoUrl)}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
-                  </div>
-                </div>
-              ) : (
                 <video
                   className="w-full rounded-lg border border-gray-200"
                   controls
                   src={videoUrl}
                 />
               )
-            ) : (
+            : (
               <div className="w-full h-64 bg-gray-50 rounded-lg border border-gray-200 grid place-items-center text-gray-500">
                 No video generated yet
               </div>

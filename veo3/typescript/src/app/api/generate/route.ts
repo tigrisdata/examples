@@ -46,7 +46,10 @@ async function generateVideoFromText(
       throw new Error('No videos generated');
     }
 
-    const uri = videos[0].video?.uri || '';
+    console.log(videos);
+
+    const uri = `${videos[0].video?.uri}&key=${API_KEY}`;
+    console.log('Downloading video from:', uri);
     return uri;
 
   } else {
