@@ -76,9 +76,10 @@ export default function Home() {
       setVideoUrl(null);
 
       const promptParts = [
-        params.subject,
-        params.action,
-        params.scene,
+        `Prompt: ${rawPrompt}`,
+        `Subject: ${params.subject}`,
+        `Action: ${params.action}`,
+        `Scene: ${params.scene}`,
         `Camera angle: ${params.cameraAngle}`,
         `Camera movement: ${params.cameraMovement}`,
         `Lens: ${params.lensEffects}`,
@@ -87,14 +88,12 @@ export default function Home() {
         `SFX: ${params.soundEffects}`,
         `Dialogue: ${params.dialogue}`,
       ].filter(Boolean);
-      const constructedPrompt = promptParts.join(". ");
-      const explicitPrompt = rawPrompt.trim();
-      const finalPrompt = explicitPrompt || constructedPrompt;
+      const finalPrompt = promptParts.join(". ");
 
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: finalPrompt, numberOfVideos: 1 }),
+        body: JSON.stringify({ prompt: finalPrompt}),
       });
 
       if (!res.ok) {
@@ -163,7 +162,7 @@ export default function Home() {
     }
   };
 
-  // Keyboard shortcuts: Cmd+Enter to generate, Cmd+K to toggle sidebar, Cmd+E to enhance
+  // Keyboard shortcuts: ⌘↩ to generate, ⌘K to toggle sidebar, ⌘E to enhance
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey && e.key === "Enter") {
@@ -204,7 +203,7 @@ export default function Home() {
               onClick={() => setSidebarOpen(true)}
               className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-4 py-2 text-gray-700 hover:bg-gray-50 shadow-sm"
             >
-              Parameters (Cmd+K)
+              Parameters (⌘K)
             </button>
           </div>
         </header>
@@ -226,7 +225,7 @@ export default function Home() {
                 disabled={isEnhancing || !rawPrompt.trim()}
                 className="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 text-white font-semibold py-2 px-5 rounded-lg shadow-sm transition-colors duration-200 disabled:cursor-not-allowed"
               >
-                {isEnhancing ? "Enhancing..." : "Enhance (Cmd+E)"}
+                {isEnhancing ? "Enhancing..." : "Enhance (⌘E)"}
               </button>
               {error && (
                 <span className="text-sm text-red-600">{error}</span>
@@ -255,7 +254,7 @@ export default function Home() {
               disabled={isGenerating}
               className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold py-3 px-8 rounded-lg shadow-sm transition-colors duration-200 disabled:cursor-not-allowed"
             >
-              {isGenerating ? "Generating Video..." : "Generate Video (Cmd+Return)"}
+              {isGenerating ? "Generating Video..." : "Generate Video (⌘↩)"}
             </button>
           </div>
         </div>
@@ -443,7 +442,7 @@ export default function Home() {
                   disabled={isGenerating}
                   className="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold py-3 px-4 rounded-lg shadow-sm transition-colors duration-200 disabled:cursor-not-allowed"
                 >
-                  {isGenerating ? "Generating Video..." : "Generate Video (Cmd+Return)"}
+                  {isGenerating ? "Generating Video..." : "Generate Video (⌘↩)"}
                 </button>
               </div>
             </div>
