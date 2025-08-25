@@ -10,7 +10,6 @@ const ai = new GoogleGenAI({
 const VEO3_MODEL_NAME = 'veo-3.0-generate-preview';
 const PROMPT_ENHANCER_MODEL = 'gemini-2.5-flash';
 
-// S3 setup
 const S3_BUCKET_NAME = "veo3";
 const S3_REGION = "auto";
 const S3_ENDPOINT = "https://t3.storage.dev";
@@ -24,7 +23,6 @@ const s3 = new S3Client({
   credentials: {
     accessKeyId: process.env.TIGRIS_STORAGE_ACCESS_KEY_ID!,
     secretAccessKey: process.env.TIGRIS_STORAGE_SECRET_ACCESS_KEY!,
-    // sessionToken: process.env.AWS_SESSION_TOKEN,
   },
 });
 
