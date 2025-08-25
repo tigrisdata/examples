@@ -42,12 +42,7 @@ export default function Home() {
       }
 
       const data = await res.json();
-      const returned = data?.url;
-      const firstUrl = Array.isArray(returned) ? returned[0] : returned;
-      if (!firstUrl || typeof firstUrl !== "string") {
-        throw new Error("No video URL returned");
-      }
-      setVideoUrl(firstUrl);
+      setVideoUrl(data?.url);
     } catch (e: any) {
       setError(e?.message || "Failed to generate video");
     } finally {
