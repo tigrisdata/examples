@@ -9,7 +9,6 @@ const ai = new GoogleGenAI({
 });
 const VEO3_MODEL_NAME = 'veo-3.0-generate-preview';
 
-// S3 setup
 const S3_BUCKET_NAME = "veo3";
 const S3_REGION = "auto";
 const S3_ENDPOINT = "https://t3.storage.dev";
